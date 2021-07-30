@@ -25,7 +25,7 @@ export const currencySlice = createSlice({
     decrementCurrency: (state, action: PayloadAction<{ sign: string, amount: number }>) => {
       const currency = state.currencies.find((currency) => currency.sign === action.payload.sign);
       if (currency) {
-        currency.balance += action.payload.amount;
+        currency.balance -= action.payload.amount;
       }
     },
   },
