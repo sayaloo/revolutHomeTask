@@ -2,6 +2,7 @@ import React from 'react';
 
 import Currency from './features/currency/Currency';
 import ExchangeRateDisplay from './features/exchangeRateDisplay/ExchangeRateDisplay';
+import ExchangeButton from './features/exchangeButton/ExchangeButton';
 
 import { AppWrapper } from './style';
 
@@ -15,9 +16,10 @@ function App() {
       height="100vh"
       width="100%"
     >
-      <Currency isDestination={false}/>
+      <Currency isCurrencyTo={false}/>
       <ExchangeRateDisplay/>
-      <Currency isDestination={true}/>
+      <Currency isCurrencyTo={true}/>
+      <ExchangeButton/>
     </AppWrapper>
   );
 }
