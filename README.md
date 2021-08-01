@@ -1,4 +1,4 @@
-Revolut Exchange Widget
+## Revolut Exchange Widget
 A React + Redux app, similar to the functionality of Revolut Android app's, currency exchange activity.
 
 ### Before running the project 
