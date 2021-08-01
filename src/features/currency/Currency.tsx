@@ -1,19 +1,41 @@
 import React from 'react';
 import { Box, Grid, Text } from 'grommet';
 
+import {
+  useInitCurrency,
+  useSelectCurrency,
+  useFilterCurrencies,
+  useSelectBalance,
+  useChangeAmount,
+  useIsLoaded,
+} from './hooks';
+
 import { StyledMenu, StyledTextInput } from './style';
 
 type CurrencyProps = {
-  isDestination: boolean
+  isCurrencyTo: boolean
 }
 
-const Currency = ({ isDestination }: CurrencyProps) => {
+const Currency = ({ isCurrencyTo }: CurrencyProps) => {
+  const currencies = useFilterCurrencies(isCurrencyTo);
+  const symbol = useInitCurrency(isCurrencyTo);
+  const balance = useSelectBalance(isCurrencyTo);
+  const enableEdit = useIsLoaded();
+  const { selectCurrency } = useSelectCurrency(isCurrencyTo);
+  const { handleChange, transactionAmount } = useChangeAmount();
+
+  const formatFloat = (num: string | any): number => {
+    if (num !== undefined) {
+      return (Math.round(parseFloat(num) * 100) / 100);
+    } else return 0;
+  };
+
   return (
     <Box
       direction="column"
       align="center"
       justify="center"
-      background={isDestination ? 'light-2' : ''}
+      background={isCurrencyTo ? 'light-2' : ''}
     >
       <Grid
         rows={[ 'xxsmall', 'xsmall' ]}
@@ -33,19 +55,14 @@ const Currency = ({ isDestination }: CurrencyProps) => {
         >
           <StyledMenu
             alignSelf="start"
-            label={<Text weight="bold" size="xlarge">Menu</Text>}
-            items={[
-              {
-                label: 'First Action', onClick: () => {
-                },
-              },
-              {
-                label: 'Second Action', onClick: () => {
-                },
-              },
-            ]}
+            label={<Text weight="bold" size="xlarge">{symbol}</Text>}
+            items={currencies.map((currency) => ({
+              label: currency.symbol,
+              value: currency.symbol,
+              onClick: selectCurrency,
+            }))}
           />
-          <Text size="small" weight="bold" color="light-6">Balance: $201.02</Text>
+          <Text size="small" weight="bold" color="light-6">{balance?.sign}{formatFloat(balance?.balance)}</Text>
         </Box>
         <Box
           gridArea="input-wrp"
@@ -55,11 +72,14 @@ const Currency = ({ isDestination }: CurrencyProps) => {
           pad="small"
         >
           <StyledTextInput
-            disabled={isDestination}
+            disabled={isCurrencyTo ? true : (!enableEdit)}
             plain={true}
             textAlign="end"
             size="xlarge"
             placeholder="0"
+            type="number"
+            onChange={handleChange}
+            value={isCurrencyTo ? transactionAmount.to : transactionAmount.from}
           />
         </Box>
       </Grid>
