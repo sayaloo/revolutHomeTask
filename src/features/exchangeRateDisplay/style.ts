@@ -7,14 +7,24 @@ const StyledDisplay = styled(Box)`
   transform: translateY(-50%);
 
   .rate-display-wrp {
+    min-width: 200px;
+    min-height: 45px;
+    background-color: white;
+    border: 1px solid #F2F2F2;
+    border-radius: 35px;
+    padding-top: 10px;
     flex-direction: row;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    border: 1px solid #F2F2F2;
-    border-radius: 35px;
-    padding: 5px 13px;
+    
+    .rate-indicator {
+      flex-direction: row;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: -10px;
+    }
 
     svg {
       stroke: #00739D;
@@ -39,15 +49,18 @@ const StyledDisplay = styled(Box)`
       padding: 6px 5px 2px 5px;
       cursor: pointer;
       transition: background-color 0.3s ease-in;
-      &:hover{
+
+      &:hover {
         background-color: #00739D;
         transition: background-color 0.3s ease-out;
-        svg{
+
+        svg {
           stroke: white;
           transition: stroke 0.3s ease-out;
         }
       }
-      svg{
+
+      svg {
         stroke: #00739D;
         width: 18px;
         height: 18px;
@@ -57,4 +70,32 @@ const StyledDisplay = styled(Box)`
   }
 `;
 
-export { StyledDisplay };
+const StyledLoader = styled.div`
+  display: block;
+  width: 35px;
+  height: 35px;
+  position: relative;
+
+  &:after {
+    content: " ";
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border-radius: 50%;
+    border: 4px solid #00739D;
+    border-color: #00739D transparent #00739D transparent;
+    animation: loader 1.2s linear infinite;
+  }
+
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export { StyledDisplay, StyledLoader };
