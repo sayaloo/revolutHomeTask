@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setCurrencyFrom, setCurrencyTo } from '../currency/currencySlice';
+import { setCurrencyFrom, setCurrencyTo, setTransactionAmount } from '../currency/currencySlice';
 
 
 const useSwapCurrencies = () => {
@@ -7,10 +7,11 @@ const useSwapCurrencies = () => {
   const currencyTo = useAppSelector((state) => state.currency.currencyTo);
   const currencyFrom = useAppSelector((state) => state.currency.currencyFrom);
   const swapCurrency = () => {
+    dispatch(setTransactionAmount({ from: '0', to: '0' }));
     dispatch(setCurrencyFrom(currencyTo));
-    dispatch(setCurrencyTo(currencyFrom))
+    dispatch(setCurrencyTo(currencyFrom));
   };
   return { swapCurrency };
 };
 
-export {useSwapCurrencies}
+export { useSwapCurrencies };

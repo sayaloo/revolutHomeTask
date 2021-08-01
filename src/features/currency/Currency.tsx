@@ -24,7 +24,7 @@ const Currency = ({ isCurrencyTo }: CurrencyProps) => {
   const { selectCurrency } = useSelectCurrency(isCurrencyTo);
   const { handleChange, transactionAmount } = useChangeAmount();
 
-  const formatFloat = (num: string | any): number => {
+  const formatFloat = (num: any): number => {
     if (num !== undefined) {
       return (Math.round(parseFloat(num) * 100) / 100);
     } else return 0;
